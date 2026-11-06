@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Todo es nada · Presente de indicativo</title>
+<style>
+:root{--cream:#faf4e7;--ink:#273b30;--olive:#567044;--mustard:#e6b94d;--coral:#d66e55;--line:#d9d3bd}*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#e7e8d5,#faf4e7 52%,#f4e1c4);font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);min-height:100vh}.wrap{max-width:900px;margin:auto;padding:35px 18px 70px}.hero{background:var(--ink);color:#fff9e9;padding:30px;border-radius:22px 22px 0 0;position:relative;overflow:hidden}.hero:after{content:'♫';position:absolute;right:24px;top:0;font-size:145px;color:#ffffff12;transform:rotate(-15deg)}.eyebrow{color:#edc66b;font-size:.78rem;letter-spacing:.15em;font-weight:800;text-transform:uppercase}.hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:12px 0}.hero p{max-width:560px;line-height:1.6;margin:0;color:#e4e9d9}.panel{background:#fffdf7;border:1px solid var(--line);border-top:0;padding:28px;border-radius:0 0 22px 22px;box-shadow:0 14px 35px #263c2815}.instructions{background:#f2ecd7;border-left:5px solid var(--mustard);padding:14px 17px;border-radius:8px;margin-bottom:23px;line-height:1.5}.meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}.pill{background:#e7eedf;color:#375a2e;border-radius:100px;padding:7px 12px;font-size:.85rem;font-weight:700}.poem{font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.02rem,2.2vw,1.21rem);line-height:2.35;white-space:normal}.verse{display:block}.stanza{margin-bottom:20px}.gap{font:700 1rem system-ui,sans-serif;width:3.9em;padding:7px 6px;text-align:center;border:2px solid #9aad83;border-radius:8px;background:#f5f8ed;color:#243a29;vertical-align:baseline;outline-offset:3px}.gap:focus{outline:3px solid #e7bd50}.gap.correct{border-color:#3c8552;background:#e5f4e7}.gap.incorrect{border-color:#cc6654;background:#fff0eb}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}.btn{cursor:pointer;border:0;border-radius:11px;padding:13px 18px;font-size:1rem;font-weight:750;background:var(--olive);color:white}.btn.secondary{background:#f1d47f;color:#423915}.btn.ghost{background:#e9ece2;color:#344b37}.btn:hover{filter:brightness(.94)}.feedback{margin-top:20px;padding:16px;border-radius:12px;background:#e9efe2;display:none;font-weight:700}.feedback.show{display:block}.small{font-size:.82rem;color:#657164;margin-top:20px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}@media(max-width:600px){.panel{padding:20px 14px}.hero{padding:24px 20px}.poem{line-height:2.55}.gap{width:3.4em;font-size:.9rem}}
+</style></head><body><main class="wrap"><header class="hero"><div class="eyebrow">Rock & Grammar · Español A2</div><h1>Todo es nada</h1><p>Completa las terminaciones de los verbos en <strong>presente de indicativo</strong>. Los demás verbos permanecen tal como aparecen en el texto.</p></header><section class="panel"><div class="instructions"><strong>Instrucciones:</strong> escribe solo las letras que faltan. Por ejemplo: <em>cant</em> + <strong>an</strong> → <em>cantan</em>. Los verbos se alternan: uno se completa y el siguiente se muestra entero.</div><div class="meta"><span class="pill" id="count">0 / 10 completados</span><span class="pill">Presente de indicativo</span></div><div class="poem" id="poem" aria-label="Texto para completar"></div><div class="actions"><button class="btn" id="check">Comprobar respuestas</button><button class="btn secondary" id="hint">Mostrar una pista</button><button class="btn ghost" id="reset">Reiniciar</button></div><div class="feedback" id="feedback" role="status" aria-live="polite"></div><p class="small">Actividad didáctica de conjugación. Se respeta la redacción del texto facilitado, con sus formas verbales originales.</p></section></main>
+<script>
+const lines=[
+'Esta es la historia en la que todos dan pero nadie recibe,',
+'en la que disparan balas a nuestras ideas todos los días.',
+'Bailando la danza del fuego, mientras niños calvos destrozan sus sueños.',
+'Mentira en sus ojos y sangre en su aliento.',
+'Eres el hombre y mendigan tu muerte.',
+'Violando tu vida cuando ya no eres nada.',
+'Sintiendo el puñal, la cuchilla se acerca,',
+'mientas escupe palabras sin fondo.',
+'Maldito anticristo hurgando en tu alma.',
+'Respira el infierno y el miedo en las calles.',
+'Pagándolo todo con dinero de nadie.',
+'Y en tu muerte nadie te añora.',
+'Sangre en tu alma, alma en tu sangre.',
+'Cuando mueras ya no habra nadie.',
+'Ya estas muerto y nadie te adora',
+'Y en tu entierro surgen las sombras.',
+'Todo es nada, nada es todo.',
+'Mientras vivas siente mi odio.',
+'Esta es la historia en la que todos reciben.',
+'Cuando nada es todo, cuando todo es nada'];
+// Alternamos las formas de presente de indicativo en orden de aparición.
+// Las raíces se mantienen visibles y el alumno completa exclusivamente la terminación.
+const verbs=[
+{line:0,word:'dan',stem:'d',end:'an'},
+{line:0,word:'recibe',stem:'recib',end:'e'},
+{line:1,word:'disparan',stem:'dispar',end:'an'},
+{line:2,word:'destrozan',stem:'destroz',end:'an'},
+{line:4,word:'Eres',stem:'Er',end:'es'},
+{line:4,word:'mendigan',stem:'mendig',end:'an'},
+{line:5,word:'eres',stem:'er',end:'es'},
+{line:6,word:'acerca',stem:'acerc',end:'a'},
+{line:7,word:'escupe',stem:'escup',end:'e'},
+{line:9,word:'Respira',stem:'Respir',end:'a'},
+{line:11,word:'añora',stem:'añor',end:'a'},
+{line:14,word:'adora',stem:'ador',end:'a'},
+{line:15,word:'surgen',stem:'surg',end:'en'},
+{line:16,word:'es',stem:'es',end:''},
+{line:16,word:'es',stem:'es',end:''},
+{line:17,word:'siente',stem:'sient',end:'e'},
+{line:18,word:'es',stem:'es',end:''},
+{line:18,word:'reciben',stem:'recib',end:'en'},
+{line:19,word:'es',stem:'es',end:''},
+{line:19,word:'es',stem:'es',end:''}];
+const active=verbs.filter((v,i)=>i%2===0&&v.end);const poem=document.getElementById('poem');let inputs=[];
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+lines.forEach((line,li)=>{let html=esc(line);const selected=active.filter(v=>v.line===li);for(const v of selected){const needle=esc(v.word);const replacement=esc(v.stem)+`<input class="gap" aria-label="Terminación de ${esc(v.word)}" data-answer="${esc(v.end)}" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="5">`;html=html.replace(needle,replacement)}const div=document.createElement('div');div.className='verse';div.innerHTML=html;poem.appendChild(div);if([2,5,9,12,16].includes(li)){const spacer=document.createElement('div');spacer.className='stanza';poem.appendChild(spacer)}});
+inputs=[...document.querySelectorAll('.gap')];const count=document.getElementById('count');const feedback=document.getElementById('feedback');function update(){count.textContent=`${inputs.filter(x=>x.value.trim()).length} / ${inputs.length} completados`};inputs.forEach(x=>x.addEventListener('input',()=>{x.classList.remove('correct','incorrect');feedback.classList.remove('show');update()}));update();
+document.getElementById('check').onclick=()=>{let good=0;inputs.forEach(x=>{const ok=x.value.trim().toLocaleLowerCase('es')===x.dataset.answer.toLocaleLowerCase('es');x.classList.toggle('correct',ok);x.classList.toggle('incorrect',!ok);if(ok)good++});feedback.classList.add('show');feedback.textContent=good===inputs.length?`¡Perfecto! ${good} de ${inputs.length} respuestas correctas.`:`${good} de ${inputs.length} correctas. Revisa los huecos marcados en coral e inténtalo de nuevo.`};
+document.getElementById('hint').onclick=()=>{const x=inputs.find(x=>x.value.trim().toLocaleLowerCase('es')!==x.dataset.answer.toLocaleLowerCase('es'));feedback.classList.add('show');if(!x){feedback.textContent='¡Ya has completado todas las terminaciones!';return}feedback.textContent=`Pista: la terminación de este verbo empieza por «${x.dataset.answer[0]}» y tiene ${x.dataset.answer.length} letra(s).`;x.focus()};
+document.getElementById('reset').onclick=()=>{inputs.forEach(x=>{x.value='';x.classList.remove('correct','incorrect')});feedback.classList.remove('show');update();inputs[0]?.focus()};
+</script></body></html>
